@@ -3,16 +3,16 @@ import time
 import sys
 
 # --- App state ---
-cookies = 0
-cookiesPerClick = 1
-cookiesPerSecond = 0
+cookies = 0.00
+cookiesPerClick = 1.00
+cookiesPerSecond = 0.00
 
 
 #shop
 shopItems = [
     #item, price, owned, benefit
-    "cursor", 0, 15, 0,
-    "farm", 0, 0, 0]
+    "cursor", 15, 0, 0.1,
+    "grandma", 100, 0, 0]
 
 
 
@@ -20,23 +20,28 @@ shopItems = [
 sessionRunTime = 0
 overallRunTime = 0
 
+shopPrice = 1
+shopOwned = 2
+shopBenefit = 3
 
-def shutdown_game():
+
+def shutdownGame():
     sys.exit(f"Bye")
 
-def update_screen():
+def updateScreen():
     dpg.set_value("cookie_count", f"Cookies: {cookies}")
-    dpg.set_item_label("shop_cursor", f"Cursor: {shopItems[shopItems.index("cursor") + 2]}")
+    dpg.set_item_label("shop_cursor", f"Cursor: {shopItems[shopItems.index("cursor") + shopOwned]} Price: {shopItems[shopItems.index("cursor") + shopPrice]}")
 
 
 
 
 
 
-def on_cookie_click():
+
+def onCookieClick():
     global cookies
     cookies += cookiesPerClick
-    update_screen()
+    updateScreen()
 
 
 
@@ -45,9 +50,13 @@ def shop(item):
     print(f"attempt at purchase")
     global cookies
     global cookiesPerSecond
-    if item == 1 and cookies >= 15:
-        cookiesPerSecond += 0.1
-        cookies -= 15
+    if item == 1 and cookies >= shopItems[shopItems.index("cursor") + 1]:
+        cookies -= shopItems[shopItems.index("cursor") + shopPrice]
+        shopItems[shopItems.index("cursor") + shopPrice] = shopItems[shopItems.index("cursor") + shopPrice] * 1.15
+        shopItems[shopItems.index("cursor") + shopOwned] += 1
+    
+
+    updateScreen()
 
 
 
@@ -74,10 +83,10 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
     dpg.add_text("Cookies: 0", tag="cookie_count")
     dpg.add_text("Cookies Per Click: 1", tag="cookies_per_click")
     dpg.add_text("Cookies Per Second: 0", tag="cookies_per_second")
-    dpg.add_button(label="Click the cookie!", callback=on_cookie_click, width=200, height=100)
+    dpg.add_button(label="Click the cookie!", callback=onCookieClick, width=200, height=100)
 
     with dpg.menu_bar():
-        dpg.add_button(label="Cookie", callback=on_cookie_click)
+        dpg.add_button(label="Cookie", callback=onCookieClick)
 
         with dpg.menu(label="Shop"):
             dpg.add_menu_item(label="Cursor: 0", tag="shop_cursor", callback=lambda: shop(1))
@@ -109,7 +118,7 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
             dpg.add_button(label="A Button")
             dpg.add_simple_plot(label="Menu plot", default_value=(0.3, 0.9, 2.5, 8.9), height=80)
 
-        dpg.add_button(label="Leave", callback=shutdown_game)
+        dpg.add_button(label="Leave", callback=shutdownGame)
 
 dpg.create_viewport(title="Cookie Clicker", width=1100, height=850)
 dpg.setup_dearpygui()
@@ -140,7 +149,7 @@ while dpg.is_dearpygui_running():
 
 
 
-        update_screen()
+        updateScreen()
         last_tick = now
 
     dpg.render_dearpygui_frame()  # <-- draws this frame; must run every loop
