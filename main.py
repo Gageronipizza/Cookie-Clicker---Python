@@ -30,6 +30,9 @@ def shutdownGame():
 
 def updateScreen():
     dpg.set_value("cookie_count", f"Cookies: {cookies}")
+    dpg.set_value("cookies_per_click", f"Cookies Per Click: {cookiesPerClick}")
+    dpg.set_value("cookies_per_second", f"Cookies Per Second: {cookiesPerSecond}")
+
     dpg.set_item_label("shop_cursor", f"Cursor: {shopItems[shopItems.index("cursor") + shopOwned]} Price: {shopItems[shopItems.index("cursor") + shopPrice]}")
 
 
@@ -52,8 +55,9 @@ def shop(item):
     global cookiesPerSecond
     if item == 1 and cookies >= shopItems[shopItems.index("cursor") + 1]:
         cookies -= shopItems[shopItems.index("cursor") + shopPrice]
-        shopItems[shopItems.index("cursor") + shopPrice] = shopItems[shopItems.index("cursor") + shopPrice] * 1.15
+        shopItems[shopItems.index("cursor") + shopPrice] = round(shopItems[shopItems.index("cursor") + shopPrice] * 1.15)
         shopItems[shopItems.index("cursor") + shopOwned] += 1
+        cookiesPerSecond += shopItems[shopItems.index("cursor") + shopBenefit]
     
 
     updateScreen()
@@ -135,6 +139,11 @@ while dpg.is_dearpygui_running():
     if now - last_tick >= 1.0:
         sessionRunTime += 1
         overallRunTime += 1
+
+
+
+        #game variables
+        cookies += cookiesPerSecond
 
 
 
