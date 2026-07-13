@@ -12,7 +12,13 @@ cookiesPerSecond = 0.00
 shopItems = [
     #item, price, owned, benefit
     "cursor", 15, 0, 0.1,
-    "grandma", 100, 0, 0]
+    "grandma", 100, 0, 1,
+    "farm", 1100, 0, 8,
+    "mine", 12000, 0, 47,
+    "factory", 130000, 0, 260,
+    "bank", 1400000, 0, 1400,
+    "temple", 20000000, 0, 7800
+    ]
 
 
 
@@ -100,19 +106,6 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
             dpg.add_menu_item(label="Factory: 0", tag="shop_factory", callback={"this is a temp placeholder"})
             dpg.add_menu_item(label="Bank: 0", tag="shop_bank", callback={"this is a temp placeholder"})
             dpg.add_menu_item(label="Temple: 0", tag="shop_temple", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Wizard Tower: 0", tag="shop_wizard_tower", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Shipment: 0", tag="shop_shipment", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Alchemy Lab: 0", tag="shop_alchemy_lab", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Portal: 0", tag="shop_portal", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Time Machine: 0", tag="shop_time_machine", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Antim. Condenser: 0", tag="shop_antim_condenser", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Prism: 0", tag="shop_prism", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Chancemaker: 0", tag="shop_chancemaker", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Fractal Engine: 0", tag="shop_fractal_engine", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Javascript Console: 0", tag="shop_javascript_console", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Idleverse: 0", tag="shop_idleverse", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Cortex Baker: 0", tag="shop_cortex_baker", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="You: 0", tag="shop_you", callback={"this is a temp placeholder"})
             
         with dpg.menu(label="Upgrades"):
             dpg.add_menu_item(label="Show Logger")
