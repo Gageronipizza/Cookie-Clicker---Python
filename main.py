@@ -35,11 +35,16 @@ def shutdownGame():
     sys.exit(f"Bye")
 
 def updateScreen():
-    dpg.set_value("cookie_count", f"Cookies: {cookies}")
-    dpg.set_value("cookies_per_click", f"Cookies Per Click: {cookiesPerClick}")
-    dpg.set_value("cookies_per_second", f"Cookies Per Second: {cookiesPerSecond}")
+    dpg.set_value("cookie_count", f"Cookies: {round(cookies, 2)}")
+    dpg.set_value("cookies_per_click", f"Cookies Per Click: {round(cookiesPerClick, 2)}")
+    dpg.set_value("cookies_per_second", f"Cookies Per Second: {round(cookiesPerSecond, 2)}")
 
     dpg.set_item_label("shop_cursor", f"Cursor: {shopItems[shopItems.index("cursor") + shopOwned]} Price: {shopItems[shopItems.index("cursor") + shopPrice]}")
+    dpg.set_item_label("shop_grandma", f"Cursor: {shopItems[shopItems.index("grandma") + shopOwned]} Price: {shopItems[shopItems.index("grandma") + shopPrice]}")
+    dpg.set_item_label("shop_farm", f"Cursor: {shopItems[shopItems.index("farm") + shopOwned]} Price: {shopItems[shopItems.index("farm") + shopPrice]}")
+    dpg.set_item_label("shop_mine", f"Cursor: {shopItems[shopItems.index("mine") + shopOwned]} Price: {shopItems[shopItems.index("mine") + shopPrice]}")
+    dpg.set_item_label("shop_factory", f"Cursor: {shopItems[shopItems.index("factory") + shopOwned]} Price: {shopItems[shopItems.index("factory") + shopPrice]}")
+    dpg.set_item_label("shop_bank", f"Cursor: {shopItems[shopItems.index("bank") + shopOwned]} Price: {shopItems[shopItems.index("bank") + shopPrice]}")
 
 
 
@@ -59,11 +64,16 @@ def shop(item):
     print(f"attempt at purchase")
     global cookies
     global cookiesPerSecond
-    if item == 1 and cookies >= shopItems[shopItems.index("cursor") + 1]:
+    if item == 1 and cookies >= shopItems[shopItems.index("cursor") + shopPrice]:
         cookies -= shopItems[shopItems.index("cursor") + shopPrice]
         shopItems[shopItems.index("cursor") + shopPrice] = round(shopItems[shopItems.index("cursor") + shopPrice] * 1.15)
         shopItems[shopItems.index("cursor") + shopOwned] += 1
         cookiesPerSecond += shopItems[shopItems.index("cursor") + shopBenefit]
+    elif item == 2 and cookies >= shopItems[shopItems.index("grandma") + shopPrice]:
+        cookies -= shopItems[shopItems.index("grandma") + shopPrice]
+        shopItems[shopItems.index("grandma") + shopPrice] = round(shopItems[shopItems.index("grandma") + shopPrice] * 1.15)
+        shopItems[shopItems.index("grandma") + shopOwned] += 1
+        cookiesPerSecond += shopItems[shopItems.index("grandma") + shopBenefit]
     
 
     updateScreen()
@@ -100,12 +110,11 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
 
         with dpg.menu(label="Shop"):
             dpg.add_menu_item(label="Cursor: 0", tag="shop_cursor", callback=lambda: shop(1))
-            dpg.add_menu_item(label="Grandma: 0", tag="shop_grandma", callback={"this is a temp placeholder"})
+            dpg.add_menu_item(label="Grandma: 0", tag="shop_grandma", callback=lambda: shop(2))
             dpg.add_menu_item(label="Farm: 0", tag="shop_farm", callback={"this is a temp placeholder"})
             dpg.add_menu_item(label="Mine: 0", tag="shop_mine", callback={"this is a temp placeholder"})
             dpg.add_menu_item(label="Factory: 0", tag="shop_factory", callback={"this is a temp placeholder"})
             dpg.add_menu_item(label="Bank: 0", tag="shop_bank", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Temple: 0", tag="shop_temple", callback={"this is a temp placeholder"})
             
         with dpg.menu(label="Upgrades"):
             dpg.add_menu_item(label="Show Logger")
@@ -136,7 +145,7 @@ while dpg.is_dearpygui_running():
 
 
         #game variables
-        cookies += cookiesPerSecond
+        cookies += round(cookiesPerSecond, 2)
 
 
 
