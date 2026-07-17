@@ -3,7 +3,7 @@ import time
 import sys
 
 # --- App state ---
-cookies = 99999999990.00
+cookies = 0.00
 cookiesPerClick = 1.00
 cookiesPerSecond = 0.00
 
@@ -16,8 +16,7 @@ shopItems = [
     "farm", 1100, 0, 8,
     "mine", 12000, 0, 47,
     "factory", 130000, 0, 260,
-    "bank", 1400000, 0, 1400,
-    "temple", 20000000, 0, 7800
+    "bank", 1400000, 0, 1400
     ]
 
 
@@ -40,11 +39,11 @@ def updateScreen():
     dpg.set_value("cookies_per_second", f"Cookies Per Second: {round(cookiesPerSecond, 2)}")
 
     dpg.set_item_label("shop_cursor", f"Cursor: {shopItems[shopItems.index("cursor") + shopOwned]} Price: {shopItems[shopItems.index("cursor") + shopPrice]}")
-    dpg.set_item_label("shop_grandma", f"Cursor: {shopItems[shopItems.index("grandma") + shopOwned]} Price: {shopItems[shopItems.index("grandma") + shopPrice]}")
-    dpg.set_item_label("shop_farm", f"Cursor: {shopItems[shopItems.index("farm") + shopOwned]} Price: {shopItems[shopItems.index("farm") + shopPrice]}")
-    dpg.set_item_label("shop_mine", f"Cursor: {shopItems[shopItems.index("mine") + shopOwned]} Price: {shopItems[shopItems.index("mine") + shopPrice]}")
-    dpg.set_item_label("shop_factory", f"Cursor: {shopItems[shopItems.index("factory") + shopOwned]} Price: {shopItems[shopItems.index("factory") + shopPrice]}")
-    dpg.set_item_label("shop_bank", f"Cursor: {shopItems[shopItems.index("bank") + shopOwned]} Price: {shopItems[shopItems.index("bank") + shopPrice]}")
+    dpg.set_item_label("shop_grandma", f"Grandma: {shopItems[shopItems.index("grandma") + shopOwned]} Price: {shopItems[shopItems.index("grandma") + shopPrice]}")
+    dpg.set_item_label("shop_farm", f"Farm: {shopItems[shopItems.index("farm") + shopOwned]} Price: {shopItems[shopItems.index("farm") + shopPrice]}")
+    dpg.set_item_label("shop_mine", f"Mine: {shopItems[shopItems.index("mine") + shopOwned]} Price: {shopItems[shopItems.index("mine") + shopPrice]}")
+    dpg.set_item_label("shop_factory", f"factory: {shopItems[shopItems.index("factory") + shopOwned]} Price: {shopItems[shopItems.index("factory") + shopPrice]}")
+    dpg.set_item_label("shop_bank", f"Bank: {shopItems[shopItems.index("bank") + shopOwned]} Price: {shopItems[shopItems.index("bank") + shopPrice]}")
 
 
 
@@ -121,6 +120,9 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
             dpg.add_simple_plot(label="Menu plot", default_value=(0.3, 0.9, 2.5, 8.9), height=80)
 
         dpg.add_button(label="Leave", callback=shutdownGame)
+
+
+    dpg.add_button(label="Generate a save code", callback=onCookieClick, width=200, height=100)
 
 dpg.create_viewport(title="Cookie Clicker", width=1100, height=850)
 dpg.setup_dearpygui()
