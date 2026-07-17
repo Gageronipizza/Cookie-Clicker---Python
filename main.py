@@ -3,7 +3,7 @@ import time
 import sys
 
 # --- App state ---
-cookies = 0.00
+cookies = 99999999990.00
 cookiesPerClick = 1.00
 cookiesPerSecond = 0.00
 
@@ -64,16 +64,12 @@ def shop(item):
     print(f"attempt at purchase")
     global cookies
     global cookiesPerSecond
-    if item == 1 and cookies >= shopItems[shopItems.index("cursor") + shopPrice]:
-        cookies -= shopItems[shopItems.index("cursor") + shopPrice]
-        shopItems[shopItems.index("cursor") + shopPrice] = round(shopItems[shopItems.index("cursor") + shopPrice] * 1.15)
-        shopItems[shopItems.index("cursor") + shopOwned] += 1
-        cookiesPerSecond += shopItems[shopItems.index("cursor") + shopBenefit]
-    elif item == 2 and cookies >= shopItems[shopItems.index("grandma") + shopPrice]:
-        cookies -= shopItems[shopItems.index("grandma") + shopPrice]
-        shopItems[shopItems.index("grandma") + shopPrice] = round(shopItems[shopItems.index("grandma") + shopPrice] * 1.15)
-        shopItems[shopItems.index("grandma") + shopOwned] += 1
-        cookiesPerSecond += shopItems[shopItems.index("grandma") + shopBenefit]
+    
+    if cookies >= shopItems[shopItems.index(item) + shopPrice]:
+        cookies -= shopItems[shopItems.index(item) + shopPrice]
+        shopItems[shopItems.index(item) + shopPrice] = round(shopItems[shopItems.index(item) + shopPrice] * 1.15)
+        shopItems[shopItems.index(item) + shopOwned] += 1
+        cookiesPerSecond += shopItems[shopItems.index(item) + shopBenefit]
     
 
     updateScreen()
@@ -109,12 +105,12 @@ with dpg.window(label="Cookie Clicker", tag="main_window"):
         dpg.add_button(label="Cookie", callback=onCookieClick)
 
         with dpg.menu(label="Shop"):
-            dpg.add_menu_item(label="Cursor: 0", tag="shop_cursor", callback=lambda: shop(1))
-            dpg.add_menu_item(label="Grandma: 0", tag="shop_grandma", callback=lambda: shop(2))
-            dpg.add_menu_item(label="Farm: 0", tag="shop_farm", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Mine: 0", tag="shop_mine", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Factory: 0", tag="shop_factory", callback={"this is a temp placeholder"})
-            dpg.add_menu_item(label="Bank: 0", tag="shop_bank", callback={"this is a temp placeholder"})
+            dpg.add_menu_item(label="Cursor: 0", tag="shop_cursor", callback=lambda: shop("cursor"))
+            dpg.add_menu_item(label="Grandma: 0", tag="shop_grandma", callback=lambda: shop("grandma"))
+            dpg.add_menu_item(label="Farm: 0", tag="shop_farm", callback=lambda: shop("farm"))
+            dpg.add_menu_item(label="Mine: 0", tag="shop_mine", callback=lambda: shop("mine"))
+            dpg.add_menu_item(label="Factory: 0", tag="shop_factory", callback=lambda: shop("factory"))
+            dpg.add_menu_item(label="Bank: 0", tag="shop_bank", callback=lambda: shop("bank"))
             
         with dpg.menu(label="Upgrades"):
             dpg.add_menu_item(label="Show Logger")
